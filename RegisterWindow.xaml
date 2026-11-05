@@ -1,0 +1,56 @@
+﻿<Window x:Class="Passwortspeicher.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registrieren" Height="420" Width="400" 
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center" Width="300">
+            <TextBlock Text="Registrieren" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Benutzername:"/>
+            <TextBox Text="{Binding RegBenutzername, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Height="25" VerticalContentAlignment="Center"/>
+
+            <TextBlock Text="Passwort:"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <PasswordBox x:Name="RegPasswordBox" Grid.Column="0" Height="25" VerticalContentAlignment="Center"
+                             Visibility="{Binding IsRegPasswordVisible, Converter={StaticResource BoolToVisInverted}}"
+                             PasswordChanged="RegPasswordBox_PasswordChanged"
+                             IsVisibleChanged="RegPasswordBox_IsVisibleChanged"/>
+                <TextBox Grid.Column="0" Height="25" VerticalContentAlignment="Center"
+                         Visibility="{Binding IsRegPasswordVisible, Converter={StaticResource BoolToVis}}"
+                         Text="{Binding RegPasswort, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Command="{Binding ToggleRegPasswordVisibilityCommand}" 
+                        Content="👁" Width="30" Height="25" Margin="5,0,0,0"/>
+            </Grid>
+
+            <TextBlock Text="Passwort wiederholen:"/>
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <PasswordBox x:Name="RegPasswordWdhBox" Grid.Column="0" Height="25" VerticalContentAlignment="Center"
+                             Visibility="{Binding IsRegPasswordWdhVisible, Converter={StaticResource BoolToVisInverted}}"
+                             PasswordChanged="RegPasswordWdhBox_PasswordChanged"
+                             IsVisibleChanged="RegPasswordWdhBox_IsVisibleChanged"/>
+                <TextBox Grid.Column="0" Height="25" VerticalContentAlignment="Center"
+                         Visibility="{Binding IsRegPasswordWdhVisible, Converter={StaticResource BoolToVis}}"
+                         Text="{Binding RegPasswortWdh, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Column="1" Command="{Binding ToggleRegPasswordWdhVisibilityCommand}" 
+                        Content="👁" Width="30" Height="25" Margin="5,0,0,0"/>
+            </Grid>
+
+            <Button Content="Jetzt Registrieren" Command="{Binding ExecuteRegisterCommand}" Height="30" FontWeight="Bold" Margin="0,0,0,10"/>
+            <Button Content="Zurück zur Anmeldung" Command="{Binding CloseRegisterWindowCommand}" Height="25"/>
+        </StackPanel>
+    </Grid>
+</Window>
